@@ -1,0 +1,66 @@
+● sudo apt-get update
+● sudo apt install apache2
+● sudo ufw app list
+● sudo ufw allow 'Apache'
+● sudo systemctl reload apache2
+○ Restart apache
+● grep -R /etc/apache2/sites-enabled
+● sudo nano /etc/apache2/sites-enabled/000-default.conf
+○ Change DocumentRoot with Web Root Folder
+● sudo chmod 745 /home/madgear/Desktop/madgear/dev
+○ Set permission
+● sudo chmod 755 /home/madgear/Desktop/madgear/dev
+○ Set permission
+○ sudo chmod -R 755 /home/madgear/Desktop/madgear/dev
+■ Setting permission to all folders , sub folders
+○ sudo chmod -R 745 /home/madgear/Desktop/madgear/dev
+■ Setting permission to all folders , sub folders
+● sudo chown -R madgear /home/madgear/Desktop/madgear/dev
+○ Set owner
+● sudo nano /etc/apache2/apache2.conf
+○ Modify Entry Directory for Web Root
+● sudo systemctl reload apache2
+○ Restart apache
+● sudo apt install php
+○ Install php
+● sudo apt install php-xml
+○ Install php xml parser
+● sudo apt install php-mysqli
+● sudo apt install composer
+○ Install composer
+● sudo service apache2 restart
+○ Restart apache
+
+
+Notes
+To enable url encoding / mod- rewrite
+Make sure directory root on apache2.conf is
+● AllowOverride All
+And on httpd.conf make sure mod-rewrite is uncommented
+● Loadmodule rewrite_module modules/mod_rewrite.so
+● This is for old version apache
+● sudo a2enmod rewrite
+● sudo a2enmod /home/madgear/Desktop/madgear/dev
+
+Extras
+● sudo apt install geany
+○ Install Geany Editor
+● sudo snap install --classic code
+○ Install vscode via a Snap
+MYSQL
+● sudo apt update
+● sudo apt install mysql-server
+● sudo mysql_secure_installation utility
+● Allow Remote Access
+○ sudo ufw enable
+○ sudo ufw allow mysql
+● sudo systemctl start mysql
+○ Start mysql
+● sudo systemctl enable mysql
+○ Launch on Reboot
+XAMPP
+Download installer from xampp site
+● chmod 755 xampp-linux-x64-8.0.3-0-installer.run
+● sudo ./xampp-linux-x64-8.0.3-0-installer.run
+● sudo /opt/lampp/lampp start
+● sudo ./manager-linux-x64.run
