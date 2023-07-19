@@ -64,3 +64,10 @@ Download installer from xampp site
 ● sudo ./xampp-linux-x64-8.0.3-0-installer.run
 ● sudo /opt/lampp/lampp start
 ● sudo ./manager-linux-x64.run
+
+
+
+
+https://morioh.com/redirect?id=64b613cec7b73d7524b7bdac&own=5eba5842444df05d1248ec97&l=https%3A%2F%2Fgithub.com%2FAsmrProg-YT%2F100-days-of-javascript%2Ftree%2Fmaster%2FDay%2520%252317%2520-%2520Snake%2520Game
+
+
