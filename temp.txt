@@ -1,1 +1,205 @@
 https://www.freecodecamp.org/news/guide-to-javascript-promises/
+
+
+
+BEGIN
+DECLARE b_trans, t_bets, w_payout, m_payout, a_c DECIMAL(20,4);
+DECLARE p1, p2, p3 DECIMAL(7,4);
+
+
+SELECT sum(amount) into @m_total FROM bettingdata WHERE game_id = NEW.game_id AND bet_type = 'm';
+SELECT sum(amount) into @w_total FROM bettingdata WHERE game_id = NEW.game_id AND bet_type = 'w';
+SELECT sum(amount) into @d_total FROM bettingdata WHERE game_id = NEW.game_id AND bet_type = 'd';
+SELECT COUNT(game_id) INTO @b_count FROM bettingdata WHERE game_id = NEW.game_id;
+
+SELECT event_rake INTO @e_rake FROM events WHERE event_id = NEW.event_id;
+SELECT fight_num INTO @fight_num FROM game_display WHERE event_id = NEW.event_id;
+
+SET t_bets = @m_total + @w_total;
+SET b_trans = t_bets * (1 - (@e_rake/100));
+SET w_payout = TRUNCATE((b_trans / @w_total), 4);
+SET m_payout = TRUNCATE((b_trans / @m_total), 4);
+
+UPDATE `sabong_db`.`game_display` SET `bet_count`= @b_count, `total_m`= @m_total, `total_w`= @w_total, `total_d`= @d_total, `payout_m`= m_payout, `payout_w`= w_payout WHERE `game_id`= NEW.game_id;
+
+-- START use user table to update bets much faster 
+ SELECT sum(amount) into @user_mtotal FROM bettingdata WHERE user_id = NEW.user_id AND game_id = NEW.game_id AND bet_type = 'm';
+ SELECT sum(amount) into @user_wtotal FROM bettingdata WHERE user_id = NEW.user_id AND game_id = NEW.game_id AND bet_type = 'w'; 
+ SELECT sum(amount) into @user_dtotal FROM bettingdata WHERE user_id = NEW.user_id AND game_id = NEW.game_id AND bet_type = 'd';
+ UPDATE `sabong_db`.`users` SET `game_id`= NEW.game_id , `total_meron`= @user_mtotal, `total_wala`= @user_wtotal, `total_draw`= @user_dtotal WHERE `user_id`= NEW.user_id;
+-- END use user table to update bets much faster 
+
+INSERT INTO `sabong_db`.`bet_history` (`user_id`, `betting_id`, `game_id`, `event_id`, `bet_amount`, `bet_side`, `site_commission`, `master_commission`) 
+VALUES (NEW.user_id, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, NEW.site_commission, NEW.master_commission);
+
+ -- checking of agent percentage here add to bettingdata
+
+SELECT user_id1, agent_commision, user_id2, agent_commision1, user_id3, agent_commision2
+INTO @agent_1, @comm_1, @agent_2, @comm_2, @agent_3, @comm_3 FROM player_upline WHERE user_id = NEW.user_id;
+ 
+IF(NEW.bet_type <> "d") THEN
+
+ IF(@agent_3 <> "")THEN	
+
+	SET p1 = (@comm_1 * 10);
+	SET p2 = ((@comm_2 - @comm_1) * 10); 
+	SET p3 = ((@comm_3 - @comm_2) * 10); 
+	
+	SET a_c = (NEW.master_commission) * ((p1 / 1) / 0.7);
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p1 , a_c, @fight_num, NEW.user_id);
+
+	-- for faster processing 1ST AGENT
+	IF( NEW.bet_type="m" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
+	END IF;
+	IF( NEW.bet_type="w" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
+	END IF;
+	-- for faster processing
+		
+	SET a_c = (NEW.master_commission) * ((p2 / 1) / 0.7);
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2, a_c, @fight_num, NEW.user_id);	
+
+	-- for faster processing 2ND AGENT
+	IF( NEW.bet_type="m" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
+	END IF;
+	IF( NEW.bet_type="w" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
+	END IF;
+	-- for faster processing
+		
+	SET a_c = (NEW.master_commission) * ((p3 / 1) / 0.7);
+
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_3, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p3, a_c, @fight_num, NEW.user_id);		
+
+	-- for faster processing 3RD AGENT
+	IF( NEW.bet_type="m" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_3;
+	END IF;
+	IF( NEW.bet_type="w" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_3;
+	END IF;
+	-- for faster processing
+
+	ELSEIF (@agent_2 <> "") THEN	
+	
+	SET p1 = (@comm_1 * 10);
+	SET p2 = ((@comm_2 - @comm_1) * 10); 	 
+		
+	SET a_c = (NEW.master_commission) * ((p1 / 1) / 0.7);
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p1, a_c, @fight_num, NEW.user_id);
+	
+	-- for faster processing 1ST AGENT
+	IF( NEW.bet_type="m" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
+	END IF;
+	IF( NEW.bet_type="w" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
+	END IF;
+	-- for faster processing
+		
+	SET a_c = (NEW.master_commission) * ((p2 / 1) / 0.7);
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2, a_c, @fight_num, NEW.user_id);		
+	
+	-- for faster processing 2ND AGENT
+	IF( NEW.bet_type="m" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
+	END IF;
+	IF( NEW.bet_type="w" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
+	END IF;
+	-- for faster processing
+	
+	
+	ELSE
+	
+	SET p1 = (@comm_1 * 10); 	 
+	
+	SET a_c = NEW.master_commission;
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p1, a_c, @fight_num, NEW.user_id);	
+
+	-- for faster processing 1ST AGENT
+	IF( NEW.bet_type="m" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
+	END IF;
+	IF( NEW.bet_type="w" )THEN
+	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
+	END IF;
+	-- for faster processing	
+
+END IF;
+ 
+ 
+-- ELSE HERE FOR DRAW RESULT
+ELSE
+
+ IF(@agent_3 <> "")THEN	
+
+	SET p2 = @comm_2 - @comm_1;
+	SET p3 = @comm_3 - @comm_2;	
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, @comm_1 * 2, NEW.winnings * (@comm_1 * 2), @fight_num, NEW.user_id);
+	 
+		-- for faster processing 1ST AGENT
+			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (@comm_1 * 2))) WHERE  `user_id`= @agent_1;
+		-- for faster processing		 
+	 
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2 * 2 , NEW.winnings * (p2 * 2), @fight_num, NEW.user_id);	
+
+		-- for faster processing 2ND AGENT
+			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (p2 * 2))) WHERE  `user_id`= @agent_2;
+		-- for faster processing
+
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_3, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p3 * 2, NEW.winnings * (p3*2), @fight_num, NEW.user_id);		
+
+		-- for faster processing 3RD AGENT
+			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (p3*2))) WHERE  `user_id`= @agent_3;
+		-- for faster processing
+
+	ELSEIF (@agent_2 <> "") THEN
+ 
+	SET p2 = @comm_2 - @comm_1;
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, @comm_1 * 2, NEW.winnings * (@comm_1 * 2), @fight_num, NEW.user_id);
+
+		-- for faster processing 1ST AGENT
+			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (@comm_1 * 2))) WHERE  `user_id`= @agent_1;
+		-- for faster processing	
+	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2 * 2 , NEW.winnings * (p2 * 2), @fight_num, NEW.user_id);	
+
+		-- for faster processing 2ND AGENT
+			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (p2 * 2))) WHERE `user_id`= @agent_2;
+		-- for faster processing	
+	
+ 	ELSE
+ 	
+	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
+	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, @comm_1 * 2, NEW.winnings * (@comm_1 * 2), @fight_num, NEW.user_id);
+
+		-- for faster processing 1ST AGENT
+			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (@comm_1 * 2))) WHERE `user_id`= @agent_1;
+		-- for faster processing		
+ 
+ END IF; 
+ 
+END IF; 
+
+END
