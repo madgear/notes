@@ -2,6 +2,61 @@ https://www.freecodecamp.org/news/guide-to-javascript-promises/
 
 
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Pop-up Menu with Function Calls</title>
+    <style>
+        /* Style the pop-up menu */
+        .popup-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="toggleMenu()">Show Pop-up Menu</button>
+    <div class="popup-menu" id="popupMenu"></div>
+
+    <script>
+        // Function to create the pop-up menu dynamically
+        function createMenu() {
+            var options = [
+                { label: 'Option 1', action: function() { alert('You clicked Option 1!'); } },
+                { label: 'Option 2', action: function() { alert('You clicked Option 2!'); } },
+                { label: 'Option 3', action: function() { alert('You clicked Option 3!'); } }
+            ];
+
+            var menuDiv = document.getElementById("popupMenu");
+            menuDiv.innerHTML = ''; // Clear previous content
+
+            for (var i = 0; i < options.length; i++) {
+                var optionLink = document.createElement('a');
+                optionLink.href = '#'; // Setting href to "#" to avoid page reload
+                optionLink.textContent = options[i].label;
+                optionLink.addEventListener('click', options[i].action); // Add click event listener
+                menuDiv.appendChild(optionLink);
+            }
+        }
+
+        // Function to toggle the pop-up menu visibility
+        function toggleMenu() {
+            var menu = document.getElementById("popupMenu");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                createMenu(); // Re-create the menu every time it's shown
+                menu.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
 BEGIN
 DECLARE b_trans, t_bets, w_payout, m_payout, a_c DECIMAL(20,4);
 DECLARE p1, p2, p3 DECIMAL(7,4);
