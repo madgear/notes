@@ -261,3 +261,33 @@ ELSE
 END IF; 
 
 END
+
+
+https://github.com/matthiasmullie/minify
+
+
+
+<?php
+require 'path/to/minify/src/Minify.php';
+require 'path/to/minify/src/CSS.php';
+require 'path/to/minify/src/JS.php';
+
+use MatthiasMullie\Minify;
+
+// Your JavaScript code
+$jsCode = "
+    function hello() {
+        console.log('Hello, world!');
+    }
+";
+
+// Create a Minify object for JavaScript
+$minifier = new Minify\JS();
+$minifier->add($jsCode);
+
+// Minify the code
+$minifiedCode = $minifier->minify();
+
+// Output minified code
+echo $minifiedCode;
+?>
