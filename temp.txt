@@ -1,5 +1,74 @@
 
+<input type="text" id="searchInput" placeholder="Search...">
+<div id="searchResults"></div>
 https://www.rapidtables.com/convert/number/binary-to-ascii.html
+
+
+
+
+<input type="text" id="searchInput" placeholder="Search...">
+<div id="searchResults"></div>
+
+
+
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+let currentIndex = -1; // Current matched result index
+
+searchInput.addEventListener('input', function() {
+    const query = searchInput.value.toLowerCase();
+    currentIndex = -1; // Reset current index when query changes
+    searchResults.innerHTML = ''; 
+
+    if (query.length > 0) {
+        // Iterate through your data or elements and filter based on the query
+        // Create a new array to hold the matching items
+        const matchingItems = data.filter(item => item.title.toLowerCase().includes(query));
+
+        if (matchingItems.length > 0) {
+            matchingItems.forEach(item => {
+                const resultElement = document.createElement('div');
+                resultElement.textContent = item.title;
+                searchResults.appendChild(resultElement);
+            });
+        } else {
+            searchResults.innerHTML = '<div>No results found.</div>';
+        }
+    }
+});
+
+searchInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        navigateResults(1);
+    } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        navigateResults(-1);
+    } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        navigateResults(1);
+    }
+});
+
+function navigateResults(direction) {
+    const resultElements = searchResults.querySelectorAll('div');
+    const resultCount = resultElements.length;
+
+    if (resultCount > 0) {
+        currentIndex = (currentIndex + direction + resultCount) % resultCount;
+        resultElements.forEach((element, index) => {
+            element.classList.toggle('active', index === currentIndex);
+        });
+
+        if (currentIndex >= 0 && currentIndex < resultCount) {
+            resultElements[currentIndex].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }
+    }
+}
+
 
 https://www.freecodecamp.org/news/guide-to-javascript-promises/
 
