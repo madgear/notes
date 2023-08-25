@@ -1,4 +1,50 @@
 
+{
+  "manifest_version": 3,
+  "name": "Localization Example",
+  "version": "1.0",
+  "permissions": ["activeTab"],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "default_locale": "en",
+  "permissions": ["activeTab", "storage"]
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Localization Example</title>
+  <script src="popup.js"></script>
+</head>
+<body>
+  <div id="greeting"></div>
+</body>
+</html>
+
+
+
+// Get the localized greeting message based on the user's language settings
+chrome.i18n.getMessage("greeting", function(message) {
+    const greetingElement = document.getElementById("greeting");
+    greetingElement.textContent = message;
+});
+
+
+
+{
+  "greeting": {
+    "message": "Hello, world!"
+  }
+}
+
+
 <input type="text" id="searchInput" placeholder="Search...">
 <div id="searchResults"></div>
 https://www.rapidtables.com/convert/number/binary-to-ascii.html
