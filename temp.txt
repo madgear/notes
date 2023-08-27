@@ -36,7 +36,8 @@ chrome.i18n.getMessage("greeting", function(message) {
     greetingElement.textContent = message;
 });
 
-
+https://easyupload.io/0q60kj
+https://easyupload.io/0q60kj
 
 {
   "greeting": {
