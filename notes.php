@@ -29,3 +29,8 @@ echo "https://github.com/mishoo/UglifyJS2/releases";
   const result = UglifyJS.minify(code, options);
   console.log(result.code);
 </script>
+
+
+IF(@a_credits < OLD.amount)THEN	
+		SIGNAL SQLSTATE VALUE 'HY000' SET MESSAGE_TEXT = 'You dont have enough Credits to process this request';
+	END IF;
