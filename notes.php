@@ -1,4 +1,13 @@
+
 <?php
+
+
+error_reporting(0); // Turns off all error reporting
+
+
+ini_set('display_errors', '0'); // Turns off displaying errors
+ini_set('display_startup_errors', '0'); // Turns off displaying startup errors
+
 echo "test";
 
 
