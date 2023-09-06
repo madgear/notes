@@ -59,3 +59,17 @@ const elementsToMove = childNodes.filter(node => node.tagName && node.tagName.to
 elementsToMove.forEach(element => {
     targetElement.appendChild(element);
 });
+
+
+jquery
+$(document).ready(function () {
+    // Get references to the source and target elements
+    const $sourceElement = $('#source');
+    const $targetElement = $('#target');
+
+    // Find and filter child elements in the source
+    const $elementsToMove = $sourceElement.children().not('script');
+
+    // Append the filtered elements to the target
+    $targetElement.append($elementsToMove);
+});
