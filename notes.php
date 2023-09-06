@@ -43,3 +43,19 @@ echo "https://github.com/mishoo/UglifyJS2/releases";
 IF(@a_credits < OLD.amount)THEN	
 		SIGNAL SQLSTATE VALUE 'HY000' SET MESSAGE_TEXT = 'You dont have enough Credits to process this request';
 	END IF;
+
+
+
+<script>
+// Get references to the source and target elements
+const sourceElement = document.getElementById('source');
+const targetElement = document.getElementById('target');
+
+// Clone the child nodes of the source element
+const childNodes = Array.from(sourceElement.childNodes);
+const elementsToMove = childNodes.filter(node => node.tagName && node.tagName.toLowerCase() !== 'script');
+
+// Append the filtered elements to the target element
+elementsToMove.forEach(element => {
+    targetElement.appendChild(element);
+});
