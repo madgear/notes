@@ -1,409 +1,75 @@
-
-{
-  "manifest_version": 3,
-  "name": "Localization Example",
-  "version": "1.0",
-  "permissions": ["activeTab"],
-  "browser_action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "images/icon16.png",
-      "48": "images/icon48.png",
-      "128": "images/icon128.png"
-    }
-  },
-  "default_locale": "en",
-  "permissions": ["activeTab", "storage"]
-}
-
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Localization Example</title>
-  <script src="popup.js"></script>
-</head>
-<body>
-  <div id="greeting"></div>
-</body>
-</html>
-
-
-
-// Get the localized greeting message based on the user's language settings
-chrome.i18n.getMessage("greeting", function(message) {
-    const greetingElement = document.getElementById("greeting");
-    greetingElement.textContent = message;
-});
-
-https://easyupload.io/0q60kj
-https://easyupload.io/0q60kj
-
-{
-  "greeting": {
-    "message": "Hello, world!"
-  }
-}
-
-
-<input type="text" id="searchInput" placeholder="Search...">
-<div id="searchResults"></div>
-https://www.rapidtables.com/convert/number/binary-to-ascii.html
-
-
-
-
-<input type="text" id="searchInput" placeholder="Search...">
-<div id="searchResults"></div>
-
-
-
-const searchInput = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
-let currentIndex = -1; // Current matched result index
-
-searchInput.addEventListener('input', function() {
-    const query = searchInput.value.toLowerCase();
-    currentIndex = -1; // Reset current index when query changes
-    searchResults.innerHTML = ''; 
-
-    if (query.length > 0) {
-        // Iterate through your data or elements and filter based on the query
-        // Create a new array to hold the matching items
-        const matchingItems = data.filter(item => item.title.toLowerCase().includes(query));
-
-        if (matchingItems.length > 0) {
-            matchingItems.forEach(item => {
-                const resultElement = document.createElement('div');
-                resultElement.textContent = item.title;
-                searchResults.appendChild(resultElement);
-            });
-        } else {
-            searchResults.innerHTML = '<div>No results found.</div>';
-        }
-    }
-});
-
-searchInput.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        navigateResults(1);
-    } else if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        navigateResults(-1);
-    } else if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        navigateResults(1);
-    }
-});
-
-function navigateResults(direction) {
-    const resultElements = searchResults.querySelectorAll('div');
-    const resultCount = resultElements.length;
-
-    if (resultCount > 0) {
-        currentIndex = (currentIndex + direction + resultCount) % resultCount;
-        resultElements.forEach((element, index) => {
-            element.classList.toggle('active', index === currentIndex);
-        });
-
-        if (currentIndex >= 0 && currentIndex < resultCount) {
-            resultElements[currentIndex].scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            });
-        }
-    }
-}
-
-
-https://www.freecodecamp.org/news/guide-to-javascript-promises/
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dynamic Pop-up Menu with Function Calls</title>
-    <style>
-        /* Style the pop-up menu */
-        .popup-menu {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-    </style>
-</head>
-<body>
-    <button onclick="toggleMenu()">Show Pop-up Menu</button>
-    <div class="popup-menu" id="popupMenu"></div>
-
-    <script>
-        // Function to create the pop-up menu dynamically
-        function createMenu() {
-            var options = [
-                { label: 'Option 1', action: function() { alert('You clicked Option 1!'); } },
-                { label: 'Option 2', action: function() { alert('You clicked Option 2!'); } },
-                { label: 'Option 3', action: function() { alert('You clicked Option 3!'); } }
-            ];
-
-            var menuDiv = document.getElementById("popupMenu");
-            menuDiv.innerHTML = ''; // Clear previous content
-
-            for (var i = 0; i < options.length; i++) {
-                var optionLink = document.createElement('a');
-                optionLink.href = '#'; // Setting href to "#" to avoid page reload
-                optionLink.textContent = options[i].label;
-                optionLink.addEventListener('click', options[i].action); // Add click event listener
-                menuDiv.appendChild(optionLink);
-            }
-        }
-
-        // Function to toggle the pop-up menu visibility
-        function toggleMenu() {
-            var menu = document.getElementById("popupMenu");
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                createMenu(); // Re-create the menu every time it's shown
-                menu.style.display = "block";
-            }
-        }
-    </script>
-</body>
-</html>
-
-
-BEGIN
-DECLARE b_trans, t_bets, w_payout, m_payout, a_c DECIMAL(20,4);
-DECLARE p1, p2, p3 DECIMAL(7,4);
-
-
-SELECT sum(amount) into @m_total FROM bettingdata WHERE game_id = NEW.game_id AND bet_type = 'm';
-SELECT sum(amount) into @w_total FROM bettingdata WHERE game_id = NEW.game_id AND bet_type = 'w';
-SELECT sum(amount) into @d_total FROM bettingdata WHERE game_id = NEW.game_id AND bet_type = 'd';
-SELECT COUNT(game_id) INTO @b_count FROM bettingdata WHERE game_id = NEW.game_id;
-
-SELECT event_rake INTO @e_rake FROM events WHERE event_id = NEW.event_id;
-SELECT fight_num INTO @fight_num FROM game_display WHERE event_id = NEW.event_id;
-
-SET t_bets = @m_total + @w_total;
-SET b_trans = t_bets * (1 - (@e_rake/100));
-SET w_payout = TRUNCATE((b_trans / @w_total), 4);
-SET m_payout = TRUNCATE((b_trans / @m_total), 4);
-
-UPDATE `sabong_db`.`game_display` SET `bet_count`= @b_count, `total_m`= @m_total, `total_w`= @w_total, `total_d`= @d_total, `payout_m`= m_payout, `payout_w`= w_payout WHERE `game_id`= NEW.game_id;
-
--- START use user table to update bets much faster 
- SELECT sum(amount) into @user_mtotal FROM bettingdata WHERE user_id = NEW.user_id AND game_id = NEW.game_id AND bet_type = 'm';
- SELECT sum(amount) into @user_wtotal FROM bettingdata WHERE user_id = NEW.user_id AND game_id = NEW.game_id AND bet_type = 'w'; 
- SELECT sum(amount) into @user_dtotal FROM bettingdata WHERE user_id = NEW.user_id AND game_id = NEW.game_id AND bet_type = 'd';
- UPDATE `sabong_db`.`users` SET `game_id`= NEW.game_id , `total_meron`= @user_mtotal, `total_wala`= @user_wtotal, `total_draw`= @user_dtotal WHERE `user_id`= NEW.user_id;
--- END use user table to update bets much faster 
-
-INSERT INTO `sabong_db`.`bet_history` (`user_id`, `betting_id`, `game_id`, `event_id`, `bet_amount`, `bet_side`, `site_commission`, `master_commission`) 
-VALUES (NEW.user_id, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, NEW.site_commission, NEW.master_commission);
-
- -- checking of agent percentage here add to bettingdata
-
-SELECT user_id1, agent_commision, user_id2, agent_commision1, user_id3, agent_commision2
-INTO @agent_1, @comm_1, @agent_2, @comm_2, @agent_3, @comm_3 FROM player_upline WHERE user_id = NEW.user_id;
- 
-IF(NEW.bet_type <> "d") THEN
-
- IF(@agent_3 <> "")THEN	
-
-	SET p1 = (@comm_1 * 10);
-	SET p2 = ((@comm_2 - @comm_1) * 10); 
-	SET p3 = ((@comm_3 - @comm_2) * 10); 
-	
-	SET a_c = (NEW.master_commission) * ((p1 / 1) / 0.7);
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p1 , a_c, @fight_num, NEW.user_id);
-
-	-- for faster processing 1ST AGENT
-	IF( NEW.bet_type="m" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
-	END IF;
-	IF( NEW.bet_type="w" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
-	END IF;
-	-- for faster processing
-		
-	SET a_c = (NEW.master_commission) * ((p2 / 1) / 0.7);
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2, a_c, @fight_num, NEW.user_id);	
-
-	-- for faster processing 2ND AGENT
-	IF( NEW.bet_type="m" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
-	END IF;
-	IF( NEW.bet_type="w" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
-	END IF;
-	-- for faster processing
-		
-	SET a_c = (NEW.master_commission) * ((p3 / 1) / 0.7);
-
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_3, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p3, a_c, @fight_num, NEW.user_id);		
-
-	-- for faster processing 3RD AGENT
-	IF( NEW.bet_type="m" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_3;
-	END IF;
-	IF( NEW.bet_type="w" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_3;
-	END IF;
-	-- for faster processing
-
-	ELSEIF (@agent_2 <> "") THEN	
-	
-	SET p1 = (@comm_1 * 10);
-	SET p2 = ((@comm_2 - @comm_1) * 10); 	 
-		
-	SET a_c = (NEW.master_commission) * ((p1 / 1) / 0.7);
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p1, a_c, @fight_num, NEW.user_id);
-	
-	-- for faster processing 1ST AGENT
-	IF( NEW.bet_type="m" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
-	END IF;
-	IF( NEW.bet_type="w" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
-	END IF;
-	-- for faster processing
-		
-	SET a_c = (NEW.master_commission) * ((p2 / 1) / 0.7);
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2, a_c, @fight_num, NEW.user_id);		
-	
-	-- for faster processing 2ND AGENT
-	IF( NEW.bet_type="m" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
-	END IF;
-	IF( NEW.bet_type="w" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_2;
-	END IF;
-	-- for faster processing
-	
-	
-	ELSE
-	
-	SET p1 = (@comm_1 * 10); 	 
-	
-	SET a_c = NEW.master_commission;
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p1, a_c, @fight_num, NEW.user_id);	
-
-	-- for faster processing 1ST AGENT
-	IF( NEW.bet_type="m" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalm_commission`= (IFNULL(`totalm_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
-	END IF;
-	IF( NEW.bet_type="w" )THEN
-	UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totalw_commission`= (IFNULL(`totalw_commission`,0) + (a_c)) WHERE  `user_id`= @agent_1;
-	END IF;
-	-- for faster processing	
-
-END IF;
- 
- 
--- ELSE HERE FOR DRAW RESULT
-ELSE
-
- IF(@agent_3 <> "")THEN	
-
-	SET p2 = @comm_2 - @comm_1;
-	SET p3 = @comm_3 - @comm_2;	
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, @comm_1 * 2, NEW.winnings * (@comm_1 * 2), @fight_num, NEW.user_id);
-	 
-		-- for faster processing 1ST AGENT
-			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (@comm_1 * 2))) WHERE  `user_id`= @agent_1;
-		-- for faster processing		 
-	 
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2 * 2 , NEW.winnings * (p2 * 2), @fight_num, NEW.user_id);	
-
-		-- for faster processing 2ND AGENT
-			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (p2 * 2))) WHERE  `user_id`= @agent_2;
-		-- for faster processing
-
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_3, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p3 * 2, NEW.winnings * (p3*2), @fight_num, NEW.user_id);		
-
-		-- for faster processing 3RD AGENT
-			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (p3*2))) WHERE  `user_id`= @agent_3;
-		-- for faster processing
-
-	ELSEIF (@agent_2 <> "") THEN
- 
-	SET p2 = @comm_2 - @comm_1;
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, @comm_1 * 2, NEW.winnings * (@comm_1 * 2), @fight_num, NEW.user_id);
-
-		-- for faster processing 1ST AGENT
-			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (@comm_1 * 2))) WHERE  `user_id`= @agent_1;
-		-- for faster processing	
-	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_2, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, p2 * 2 , NEW.winnings * (p2 * 2), @fight_num, NEW.user_id);	
-
-		-- for faster processing 2ND AGENT
-			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (p2 * 2))) WHERE `user_id`= @agent_2;
-		-- for faster processing	
-	
- 	ELSE
- 	
-	INSERT INTO `sabong_db`.`commission_tbl` (`userid`, `betid`, `gameid`, `eventid`, `amount`, `betside`, `commission`, `commission_amount`, `fight_num`, `from_user`) 
-	VALUES (@agent_1, NEW.betting_id, NEW.game_id, NEW.event_id, NEW.amount, NEW.bet_type, @comm_1 * 2, NEW.winnings * (@comm_1 * 2), @fight_num, NEW.user_id);
-
-		-- for faster processing 1ST AGENT
-			UPDATE `sabong_db`.`users` SET `c_gameid`= NEW.game_id, `totald_commission`= (IFNULL(`totald_commission`,0) + (NEW.winnings * (@comm_1 * 2))) WHERE `user_id`= @agent_1;
-		-- for faster processing		
- 
- END IF; 
- 
-END IF; 
-
-END
-
-
-https://github.com/matthiasmullie/minify
-
-
-
-<?php
-require 'path/to/minify/src/Minify.php';
-require 'path/to/minify/src/CSS.php';
-require 'path/to/minify/src/JS.php';
-
-use MatthiasMullie\Minify;
-
-// Your JavaScript code
-$jsCode = "
-    function hello() {
-        console.log('Hello, world!');
-    }
-";
-
-// Create a Minify object for JavaScript
-$minifier = new Minify\JS();
-$minifier->add($jsCode);
-
-// Minify the code
-$minifiedCode = $minifier->minify();
-
-// Output minified code
-echo $minifiedCode;
-?>
+Sub ConnectToDatabase()
+    Dim conn As Object
+    Set conn = CreateObject("ADODB.Connection")
+    
+    ' Define the connection string
+    Dim connStr As String
+    connStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Path\To\Your\Database.accdb;"
+    
+    ' Open the connection
+    conn.Open connStr
+    
+    ' Check if the connection is open
+    If conn.State = 1 Then
+        MsgBox "Connection Successful!"
+    Else
+        MsgBox "Connection Failed!"
+    End If
+    
+    ' Close the connection
+    conn.Close
+    Set conn = Nothing
+End Sub
+
+
+Sub DatabaseOperations()
+    Dim conn As Object
+    Set conn = CreateObject("ADODB.Connection")
+    
+    ' Define the connection string
+    Dim connStr As String
+    connStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Path\To\Your\Database.accdb;"
+    
+    ' Open the connection
+    conn.Open connStr
+    
+    If conn.State = 1 Then
+        ' Add data to the database
+        Dim addSQL As String
+        addSQL = "INSERT INTO YourTable (Field1, Field2) VALUES ('Value1', 'Value2');"
+        conn.Execute addSQL
+        
+        ' Edit data in the database
+        Dim editSQL As String
+        editSQL = "UPDATE YourTable SET Field1 = 'NewValue' WHERE Field2 = 'Value2';"
+        conn.Execute editSQL
+        
+        ' Delete data from the database
+        Dim deleteSQL As String
+        deleteSQL = "DELETE FROM YourTable WHERE Field2 = 'Value2';"
+        conn.Execute deleteSQL
+        
+        ' Display data from the database
+        Dim rs As Object
+        Set rs = CreateObject("ADODB.Recordset")
+        Dim displaySQL As String
+        displaySQL = "SELECT * FROM YourTable;"
+        rs.Open displaySQL, conn
+        
+        ' Loop through the recordset and display data
+        Do Until rs.EOF
+            Debug.Print rs("Field1").Value & " - " & rs("Field2").Value
+            rs.MoveNext
+        Loop
+        
+        ' Close the recordset
+        rs.Close
+        Set rs = Nothing
+    Else
+        MsgBox "Connection Failed!"
+    End If
+    
+    ' Close the connection
+    conn.Close
+    Set conn = Nothing
+End Sub
