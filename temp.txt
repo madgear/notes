@@ -1,3 +1,15 @@
+
+Private Sub CommandButton1_Click()
+    ' Load HTML source from TextBox1 into the WebBrowser control
+    WebBrowser1.Navigate "about:blank"
+    WebBrowser1.Document.Write TextBox1.Text
+    WebBrowser1.Refresh
+
+    ' Display the HTML source in TextBox2
+    TextBox2.Text = TextBox1.Text
+End Sub
+
+
 Sub ConnectToDatabase()
     Dim conn As Object
     Set conn = CreateObject("ADODB.Connection")
