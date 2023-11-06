@@ -1,4 +1,19 @@
 
+
+Private Sub YourBrowserControlName_Click()
+    Dim url As String
+    url = Me.YourBrowserControlName.ControlSource
+
+    If InStr(url, "https://msaccess") = 1 Then
+        ' Extract the specific action or file path from the URL and handle accordingly.
+        ' For example, open a local file or perform a custom action.
+    Else
+        ' Handle standard web URLs (http, https) using the Web Browser control as usual.
+        Me.YourBrowserControlName.ControlSource = url
+    End If
+End Sub
+
+
 Private Sub CommandButton1_Click()
     ' Load HTML source from TextBox1 into the WebBrowser control
     WebBrowser1.Navigate "about:blank"
