@@ -1,0 +1,216 @@
+php
+
+include_once "autoload.php";
+
+$route = get_route("/saikuru");
+
+if ($route == '/api' || preg_match('/api\//i', $route)) {  
+  include_once "includes/controller/api.php";
+  exit;
+} else if ($route == "/") {
+} else {
+  echo _msg(404, "Page Not Found!");
+  exit;
+}
+
+session_start();
+
+if (!array_key_exists('user_login', $_SESSION)) {
+  $_SESSION['user_login'] = "";
+}
+
+if (!array_key_exists('user_id', $_SESSION)) {
+  $_SESSION['user_id'] = "";
+}
+if (!array_key_exists('user_name', $_SESSION)) {
+  $_SESSION['user_name'] = "";
+}
+if (!array_key_exists('user_username', $_SESSION)) {
+  $_SESSION['user_username'] = "";
+}
+
+if (!array_key_exists('position', $_SESSION)) {
+  $_SESSION['position'] = "";
+}
+
+if (!array_key_exists('avatar', $_SESSION)) {
+  $_SESSION['avatar'] = "";
+}
+
+if (!array_key_exists('site_error_msg', $_SESSION)) {
+  $_SESSION['site_error_msg'] = "";
+}
+if (!array_key_exists('site_success_msg', $_SESSION)) {
+  $_SESSION['site_success_msg'] = "";
+}
+if (!array_key_exists('site_info_msg', $_SESSION)) {
+  $_SESSION['site_info_msg'] = "";
+}
+if (!array_key_exists('CURRENT_PAGE', $_SESSION)) {
+  $_SESSION['CURRENT_PAGE'] = "";
+}
+
+
+
+if (isset($_POST['process'])) {
+  include_once "includes/controller/process.php";
+  exit;
+}
+
+
+if ($_SESSION['user_login']  == "") {
+  include_once "includes/views/login.php";
+  exit;
+}
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saikuru</title>
+  <link rel="icon" href="assets/img/64x64.png">
+  <link rel="stylesheet" href="assets/css/bs.css" />
+  <link rel="stylesheet" href="assets/css/all.css" />
+  <link rel="stylesheet" href="assets/css/jquery-ui.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- <script src="js/bootstrap.min.js"></script> -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/all.js"></script>
+  <script src="assets/js/brands.js"></script>
+  <script src="assets/js/solid.js"></script>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/jquery-ui.js"></script>
+  <script src="assets/js/functions"></script>
+</head>
+
+<body id="test">
+  <div class="d-flex container main-dashboard light-theme">
+    <!-- THEME TOGGLE SWITCH -->
+    <div class="toggleWrapper">
+      <input type="checkbox" class="dn" id="color-theme" />
+      <label for="color-theme" class="toggle">
+        <span class="toggle__handler">
+          <span class="crater crater--1"></span>
+          <span class="crater crater--2"></span>
+          <span class="crater crater--3"></span>
+        </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+      </label>
+    </div>
+    <!-- END OF THEME TOGGLE SWITCH -->
+
+    <!-- SIDEBAR -->
+    <div class="sidebar__panel d-flex flex-column position-relative">
+      <button id="toggle_sidebar" class="position-absolute" type="button"><i class="fa-solid fa-angle-left"></i></button>
+
+      <div class="mb-3 logo-container">
+        <div class="product-logo"></div>
+        <span class="logo-name">Saikuru</span>
+      </div>
+
+      <div class="flex-grow-1 mt-5 panel__menu">
+
+        <h5 class="mb-3 menu-label">Main Menu</h5>
+
+        <div id="dashboard_page" class="menu__button active" data-title="dashboard" title="Dashboard">
+          <i class="fa-brands fa-slideshare"></i>
+          <span class="menu__name">Dashboard</span>
+        </div>
+
+        <div id="kanban_page" class="menu__button" data-title="kanban" title="Kanban">
+          <i class="fa-regular fa-note-sticky"></i>
+          <span class="menu__name">Kanban</span>
+        </div>
+
+        <!-- <div class="menu__dropdown">
+          <div class="menu__button-2" id="sub-menu_reports" data-title="reports" title="Reports">
+            <i class="fa-solid fa-chart-column"></i>
+            <span class="menu__name">Reports</span>
+            <span class="btn-dropdown"><i class="fa-solid fa-angle-down"></i></span>
+          </div>
+
+          <div class="dropdown__items">
+            <div class="ms-4 menu__button" data-title="daily" title="Daily">
+              <i class="fa-solid fa-calendar-day"></i>
+              <span class="menu__name">Daily</span>
+            </div>
+          </div>
+        </div> -->
+
+        <div id="kanban_page" class="menu__button" data-title="reports" title="Ranban">
+          <i class="fa-solid fa-chart-column"></i>
+          <span class="menu__name">Reports</span>
+        </div>
+
+        <div class="menu__button position-relative" data-title="notifications" title="Notifications">
+          <i class="fa-regular fa-bell"></i>
+          <span class="menu__name">Notifications</span>
+          <span class="position-absolute translate-middle badge rounded-pill bg-danger" id="total_notif_count">0</span>
+        </div>
+
+        <div class="mt-2 mb-4 opacity-25">
+          <hr class="hr-line" />
+        </div>
+
+        <div class="menu__settings">
+          <h5 class="mb-3 menu-label">Settings</h5>
+          <div class="menu__button" data-title="account" title="Account">
+            <i class="fa-regular fa-user"></i>
+            <span class="menu__name">Account</span>
+          </div>
+
+          <div class="menu__button" data-title="preferences" title="Preferences">
+            <i class="fa-solid fa-sliders"></i>
+            <span class="menu__name">Preferences</span>
+          </div>
+
+          <div class="menu__button" data-title="logout" title="Logout" data-bs-toggle="modal" data-bs-target="#logoutModal">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span class="menu__name">Logout</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel__profile d-flex align-items-center">
+        <img class="profile-img" />
+        <span class="profile-name">
+          <span><?php echo $_SESSION['user_name']; ?></span>
+          <span><?php echo $_SESSION['position']; ?></span>
+        </span>
+      </div>
+    </div>
+    <!-- END OF SIDEBAR -->
+    <?php
+    include 'includes/content/dashboard.php';
+    include 'includes/content/kanban.php';
+    include 'includes/content/notifications.php';
+    include 'includes/content/profile.php';
+    include 'includes/content/preferences.php';
+    include 'includes/content/reports.php';
+    ?>
+
+  </div>
+
+
+  <!-- MODAL -->
+  <?php
+  include 'includes/component/modal.php';
+  include 'includes/component/toast.php';
+  ?>
+  <script src="assets/js/chart.js"></script>
+  <script src="assets/js/stats.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+
+</html>
