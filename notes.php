@@ -1,5 +1,39 @@
 
-<?php
+Option Compare Database
+Option Explicit
+
+Sub SaveClipboardImageToLocalFile()
+    On Error Resume Next
+    
+    ' Create a new DataObject to access the clipboard
+    Dim dataObj As New MSForms.DataObject
+    
+    ' Get data from the clipboard
+    dataObj.GetFromClipboard
+    
+    ' Check if there is an image on the clipboard
+    If dataObj.GetFormat(1) = 1 Then
+        ' Save the image to a local file
+        SaveBinaryDataToFile dataObj.GetData(1), "C:\Path\To\Your\Local\File.jpg"
+        MsgBox "Image saved successfully!"
+    Else
+        MsgBox "No image found on the clipboard."
+    End If
+    
+    Set dataObj = Nothing
+End Sub
+
+Sub SaveBinaryDataToFile(data() As Byte, filePath As String)
+    On Error Resume Next
+    
+    ' Create a binary stream and write the data to the file
+    Dim fs As Object
+    Set fs = CreateObject("Scripting.FileSystemObject").CreateTextFile(filePath, True, True)
+    fs.Write data
+    fs.Close
+    
+    Set fs = Nothing
+End Sub<?php<?php
 
 
 error_reporting(0); // Turns off all error reporting
