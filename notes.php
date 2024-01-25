@@ -1,5 +1,25 @@
 
 Sub SaveClipboardImageToLocal()
+    ' Create a form with an Image control named "Image0"
+    ' Ensure the form is not visible during this process
+
+    ' Open the form
+    DoCmd.OpenForm "YourFormName", acNormal, , , , acHidden
+    
+    ' Paste the Clipboard content into the Image control
+    Forms("YourFormName").Controls("Image0").Picture = Forms("YourFormName").ClipboardData(1)
+
+    ' Save the image to a local file
+    DoCmd.OutputTo acOutputForm, "YourFormName", acFormatBMP, "C:\Path\To\Your\Local\File.bmp"
+
+    ' Close the form
+    DoCmd.Close acForm, "YourFormName"
+
+    MsgBox "Image saved successfully.", vbInformation
+End Sub
+
+
+Sub SaveClipboardImageToLocal()
     Dim objData As MSForms.DataObject
     Set objData = New MSForms.DataObject
 
