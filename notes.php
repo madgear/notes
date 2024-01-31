@@ -1,56 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Error Example</title>
+</head>
+<body>
 
-Sub SaveClipboardImageToLocal()
-    ' Create a form with an Image control named "Image0"
-    ' Ensure the form is not visible during this process
+<!-- Random font-size without units -->
+<span style='font-size: 2;'>test</span>
 
-    ' Open the form
-    DoCmd.OpenForm "YourFormName", acNormal, , , , acHidden
-    
-    ' Paste the Clipboard content into the Image control
-    Forms("YourFormName").Controls("Image0").Picture = Forms("YourFormName").ClipboardData(1)
+<script>
+    // JavaScript to check for font-size without units
+    var element = document.querySelector('span');
 
-    ' Save the image to a local file
-    DoCmd.OutputTo acOutputForm, "YourFormName", acFormatBMP, "C:\Path\To\Your\Local\File.bmp"
+    if (element && element.style && typeof element.style === 'object') {
+        // Access and inspect font-size property
+        var fontSize = element.style.fontSize;
 
-    ' Close the form
-    DoCmd.Close acForm, "YourFormName"
+        if (fontSize && isNaN(parseFloat(fontSize))) {
+            console.error('Style error: Font-size without units');
+        }
+    } else {
+        console.error('Element or style property not found');
+    }
+</script>
 
-    MsgBox "Image saved successfully.", vbInformation
-End Sub
-
-
-Sub SaveClipboardImageToLocal()
-    Dim objData As MSForms.DataObject
-    Set objData = New MSForms.DataObject
-
-    ' Get data from the Clipboard
-    objData.GetFromClipboard
-
-    ' Check if the Clipboard contains an image
-    If objData.GetFormat(1) Then
-        ' Save the image to a local file
-        Open "C:\Path\To\Your\Local\File.jpg" For Binary Access Write As #1
-        Put #1, , objData.GetData(1)
-        Close #1
-    Else
-        MsgBox "No image found in the Clipboard.", vbExclamation
-    End If
-End Sub
-
-Sub SaveClipboardImageToLocal()
-    Dim objData As DataObject
-    Set objData = New DataObject
-
-    ' Get data from the Clipboard
-    objData.GetFromClipboard
-
-    ' Check if the Clipboard contains an image
-    If objData.GetFormat(1) Then
-        ' Save the image to a local file
-        Open "C:\Path\To\Your\Local\File.jpg" For Binary Access Write As #1
-        Put #1, , objData.GetData(1)
-        Close #1
-    Else
-        MsgBox "No image found in the Clipboard.", vbExclamation
-    End If
-End Sub
+</body>
+</html>
