@@ -1,5 +1,11 @@
 //https://easyupload.io/0yt547
 
+git clone https://github.com/thammegowda/nllb-serve
+cd nllb-serve
+pip install -e .
+
+nllb-serve
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
