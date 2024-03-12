@@ -1,5 +1,12 @@
 //https://easyupload.io/0yt547
 
+
+https://www.facebook.com/share/qYquqyACWCgBqNoe/?mibextid=TrneLp
+
+
+
+https://morioh.com/a/313191fecf97/build-a-todo-list-app-in-html-css-and-javascript
+
 git clone https://github.com/thammegowda/nllb-serve
 cd nllb-serve
 pip install -e .
