@@ -1,0 +1,117 @@
+Sub GenerateTreeViewHTML()
+    Dim db As DAO.Database
+    Dim rs As DAO.Recordset
+    Dim nodes As Collection
+    Dim rootNode As Object
+    Dim html As String
+
+    Set db = CurrentDb
+    Set nodes = New Collection
+    
+    ' Fetch the hierarchical data
+    Set rs = db.OpenRecordset( _
+        "SELECT id, question_id, answer_id, next_question_id " & _
+        "FROM tbl_questions_answers " & _
+        "ORDER BY id;")
+    
+    ' Convert data to nested dictionary structure
+    Do While Not rs.EOF
+        Dim node As Object
+        Set node = CreateObject("Scripting.Dictionary")
+        node("id") = rs!id
+        node("question_id") = rs!question_id
+        node("answer_id") = rs!answer_id
+        node("next_question_id") = rs!next_question_id
+        node("children") = New Collection
+        nodes.Add node
+        rs.MoveNext
+    Loop
+    rs.Close
+    
+    ' Build tree structure
+    Set rootNode = CreateObject("Scripting.Dictionary")
+    rootNode("children") = New Collection
+
+    Dim i As Integer
+    For i = 1 To nodes.Count
+        Dim n As Object
+        Set n = nodes(i)
+        If IsNull(n("next_question_id")) Then
+            rootNode("children").Add n
+        Else
+            Dim parent As Object
+            Set parent = GetNodeByNextQuestionId(nodes, n("next_question_id"))
+            If Not parent Is Nothing Then
+                parent("children").Add n
+            End If
+        End If
+    Next i
+
+    ' Generate HTML
+    html = "<ul>" & TreeToHTML(rootNode("children")) & "</ul>"
+
+    ' Output the HTML
+    Debug.Print html
+End Sub
+
+Function GetNodeByNextQuestionId(nodes As Collection, nextQuestionId As Long) As Object
+    Dim i As Integer
+    For i = 1 To nodes.Count
+        If nodes(i)("id") = nextQuestionId Then
+            Set GetNodeByNextQuestionId = nodes(i)
+            Exit Function
+        End If
+    Next i
+    Set GetNodeByNextQuestionId = Nothing
+End Function
+
+Function TreeToHTML(tree As Collection) As String
+    Dim html As String
+    html = ""
+    
+    Dim i As Integer
+    For i = 1 To tree.Count
+        Dim node As Object
+        Set node = tree(i)
+        
+        ' Fetch question and answer text
+        Dim questionCode As String
+        Dim answerText As String
+        questionCode = GetQuestionCode(node("question_id"))
+        answerText = GetAnswerText(node("answer_id"))
+        
+        html = html & "<li>Question Code: " & questionCode & "<br>Answer: " & answerText
+        If node("children").Count > 0 Then
+            html = html & "<ul>" & TreeToHTML(node("children")) & "</ul>"
+        End If
+        html = html & "</li>"
+    Next i
+    
+    TreeToHTML = html
+End Function
+
+Function GetQuestionCode(questionId As Long) As String
+    Dim db As DAO.Database
+    Dim rs As DAO.Recordset
+    Set db = CurrentDb
+    Set rs = db.OpenRecordset("SELECT txt_code FROM tbl_questions WHERE id = " & questionId)
+    If Not rs.EOF Then
+        GetQuestionCode = rs!txt_code
+    Else
+        GetQuestionCode = ""
+    End If
+    rs.Close
+End Function
+
+Function GetAnswerText(answerId As Long) As String
+    Dim db As DAO.Database
+    Dim rs As DAO.Recordset
+    Set db = CurrentDb
+    Set rs = db.OpenRecordset("SELECT answer_text FROM tbl_answers WHERE id = " & answerId)
+    If Not rs.EOF Then
+        GetAnswerText = rs!answer_text
+    Else
+        GetAnswerText = ""
+    End If
+    rs.Close
+End Function
