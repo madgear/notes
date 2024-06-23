@@ -115,3 +115,148 @@ Function GetAnswerText(answerId As Long) As String
     End If
     rs.Close
 End Function
+
+
+//CSS
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 1em;
+    position: relative;
+}
+
+ul::before {
+    content: "";
+    border-left: 1px solid #ccc;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+li {
+    margin: 1em 0;
+    padding-left: 1em;
+    position: relative;
+}
+
+li::before {
+    content: "";
+    border-top: 1px solid #ccc;
+    position: absolute;
+    top: 1em;
+    left: 0;
+    width: 1em;
+    height: 0;
+}
+
+li::after {
+    content: "";
+    border-left: 1px solid #ccc;
+    position: absolute;
+    top: 1em;
+    left: 0;
+    bottom: -1em;
+}
+
+li:last-child::after {
+    height: 1em;
+}
+
+li > ul::before {
+    border-left: 1px solid #ccc;
+    position: absolute;
+    top: -1em;
+    bottom: 0;
+    left: 0;
+}
+
+.tree-node {
+    display: inline-block;
+    padding: 0.5em 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f9f9f9;
+    position: relative;
+}
+
+.tree-node::before,
+.tree-node::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tree-node::before {
+    border-left: 1px solid #ccc;
+    left: -1em;
+    width: 1em;
+    height: 0;
+}
+
+.tree-node::after {
+    border-top: 1px solid #ccc;
+    top: 50%;
+    left: -1em;
+    width: 1em;
+}
+
+.tree-node:first-child::before,
+.tree-node:first-child::after {
+    display: none;
+}
+
+.tree-node:first-child::after {
+    border-top: none;
+    height: 1em;
+    top: 0;
+}
+
+.tree-node:last-child::after {
+    height: 1em;
+    top: auto;
+    bottom: 0;
+}
+
+
+//HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree View Flowchart</title>
+    <style>
+        /* Include the CSS from above here */
+    </style>
+</head>
+<body>
+    <ul>
+        <li>
+            <div class="tree-node">Question Code: Q1<br>Answer: A1</div>
+            <ul>
+                <li>
+                    <div class="tree-node">Question Code: Q2<br>Answer: A2</div>
+                    <ul>
+                        <li><div class="tree-node">Question Code: Q3<br>Answer: A3</div></li>
+                    </ul>
+                </li>
+                <li><div class="tree-node">Question Code: Q4<br>Answer: A4</div></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
+
+
