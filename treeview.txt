@@ -1,2 +1,3 @@
 https://github.com/SamirPaulb/real-time-voice-translator
 https://github.com/RasaHQ/paraphraser?tab=readme-ov-file
+devdocs.io
