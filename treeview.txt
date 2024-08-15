@@ -1,3 +1,6 @@
 https://github.com/SamirPaulb/real-time-voice-translator
 https://github.com/RasaHQ/paraphraser?tab=readme-ov-file
 devdocs.io
+
+
+https://dev.to/dipakahirav/15-javascript-array-functions-you-should-master-as-a-senior-dev-54gg
