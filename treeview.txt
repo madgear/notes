@@ -4,3 +4,240 @@ devdocs.io
 
 
 https://dev.to/dipakahirav/15-javascript-array-functions-you-should-master-as-a-senior-dev-54gg
+
+# Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost
+127.0.0.1 www.mediahuman.com
+127.0.0.1 www.mediahuman.net
+127.0.0.1 linkvertise.com
+127.0.0.1 media.discordapp.net
+127.0.0.1 cdn.discordapp.com
+127.0.0.1 discordapp.net
+127.0.0.1 discordapp.com
+127.0.0.1 pornhub.com
+127.0.0.1 discord.com
+127.0.0.1 roblox.com
+127.0.0.1 www.roblox.com
+127.0.0.1 cdnwrd2.com
+127.0.0.1 zomeowrara.b-cdn.net
+127.0.0.1 store5.gofile.io
+127.0.0.1 1111-releases.cloudflareclient.com
+127.0.0.1 cloudflareclient.com
+127.0.0.1 toppornsites.com
+127.0.0.1 www.xvideos.com
+127.0.0.1 www.pornhub.com
+127.0.0.1 xhamster.com
+
+127.0.0.1 www.xnxx.com
+127.0.0.1 www.youporn.com
+127.0.0.1 www.redtube.com
+127.0.0.1 www.porn.com
+127.0.0.1 www.tube8.com
+127.0.0.1 www.ixxx.com
+127.0.0.1 www.sunporno.com
+127.0.0.1 www.pornhat.com
+127.0.0.1 www.porn300.com
+127.0.0.1 pornone.com
+127.0.0.1 www.sexvid.xxx
+127.0.0.1 www.thumbzilla.com
+127.0.0.1 zbporn.com
+127.0.0.1 www.fuq.com
+127.0.0.1 ok.xxx
+127.0.0.1 beeg.com
+127.0.0.1 www.tubegalore.com
+127.0.0.1 xxxbunker.com
+127.0.0.1 www.3movs.com
+127.0.0.1 www.cumlouder.com
+127.0.0.1 porndoe.com
+127.0.0.1 xbabe.com
+127.0.0.1 vipwank.com
+127.0.0.1 www.porndroids.com
+127.0.0.1 www.alohatube.com
+127.0.0.1 www.maturetube.com
+127.0.0.1 www.tubev.sex
+127.0.0.1 www.4tube.com
+127.0.0.1 shameless.com
+127.0.0.1 www.megatube.xxx
+127.0.0.1 www.porntube.com
+127.0.0.1 www.porndig.com
+127.0.0.1 www.pornburst.xxx
+127.0.0.1 www.bigporn.com
+127.0.0.1 www.porn.biz
+127.0.0.1 fapvidhd.com
+127.0.0.1 smutr.com
+127.0.0.1 www.melonstube.com
+127.0.0.1 tastyblacks.com
+127.0.0.1 www.lobstertube.com
+127.0.0.1 fapster.xxx
+127.0.0.1 viviporn.tv/
+127.0.0.1 pornfaze.com
+127.0.0.1 pornmaki.com
+127.0.0.1 www.pornid.xxx
+127.0.0.1 www.hotporntubes.com
+127.0.0.1 pornito.xxx
+127.0.0.1 thematureporn.net
+127.0.0.1 www.xxxvideos247.com
+127.0.0.1 handjobhub.com
+127.0.0.1 www.dansmovies.com
+127.0.0.1 www.porn7.xxx
+127.0.0.1 www.forhertube.com
+127.0.0.1 www.pornheed.com
+127.0.0.1 www.orgasm.com
+127.0.0.1 www.pornrabbit.com
+127.0.0.1 www.tiava.com
+127.0.0.1 www.fux.com
+127.0.0.1 www.metaporn.com
+127.0.0.1 www.pornerbros.com
+127.0.0.1 iporntv.net
+127.0.0.1 www.mobilepornmovies.com
+127.0.0.1 pornplanner.com
+127.0.0.1 mypornbible.com
+127.0.0.1 www.badjojo.com
+127.0.0.1 www.findtubes.com
+127.0.0.1 www.pornmd.com
+127.0.0.1 awejmp.com
+127.0.0.1 ctrdwm.com
+127.0.0.1 go.stripchat.com
+127.0.0.1 tour.camsoda.com
+127.0.0.1 jerkmate.com
+127.0.0.1 slutroulette.com
+127.0.0.1 liveporngirls.com
+127.0.0.1 www.camsfinder.com
+127.0.0.1 milfslive.com
+127.0.0.1 ichatonline.com
+127.0.0.1 www.camsoda.com
+127.0.0.1 promptchan.ai
+127.0.0.1 made.porn
+127.0.0.1 sexy.ai
+127.0.0.1 www.watchmygf.me
+127.0.0.1 lovehomeporn.com
+127.0.0.1 www.iknowthatgirl.com
+127.0.0.1 www.assoass.com
+127.0.0.1 bigassporn.tv
+127.0.0.1 stufferdb.com
+127.0.0.1 www.pornpics.com
+127.0.0.1 www.youx.xxx
+127.0.0.1 viewgals.com
+127.0.0.1 www.hotpornphotos.com
+127.0.0.1 www.pichunter.com
+127.0.0.1 www.zenra.net
+127.0.0.1 vjav.com
+127.0.0.1 bdsmstreak.com
+127.0.0.1 www.clips4sale.com
+127.0.0.1 hentaihaven.xxx
+127.0.0.1 hentaigasm.com
+127.0.0.1 www.fakku.net
+127.0.0.1 gelbooru.com
+127.0.0.1 porcore.com
+127.0.0.1 www.cartoonporno.xxx
+127.0.0.1 lp.adulttime.xxx
+127.0.0.1 vrporn.com
+127.0.0.1 vrbangers.com
+127.0.0.1 www.vrsmash.com
+127.0.0.1 badoinkvr.com
+127.0.0.1 www.wankzvr.com
+127.0.0.1 www.czechvr.com
+127.0.0.1 www.sexlikereal.com
+127.0.0.1 go.stripchat.com
+127.0.0.1 www.gaymaletube.com
+127.0.0.1 www.youporngay.com
+127.0.0.1 www.gayfuror.com
+127.0.0.1 www.justusboys.com
+127.0.0.1 filf.com
+127.0.0.1 myporngay.com
+127.0.0.1 iptorrents.com
+127.0.0.1 pussytorrents.org
+127.0.0.1 www.xxxfollow.com
+127.0.0.1 www.freeones.com
+127.0.0.1 www.barelist.com
+127.0.0.1 www.babepedia.com
+127.0.0.1 www.kindgirls.com
+127.0.0.1 www.tubepornstars.com
+127.0.0.1 www.bellesa.co
+127.0.0.1 www.stasyq.com
+127.0.0.1 thechive.com
+127.0.0.1 www.lesbian8.com
+127.0.0.1 www.girlsway.com
+127.0.0.1 milfporn.tv
+127.0.0.1 www.shemalehd.sex
+127.0.0.1 www.anyshemale.com
+127.0.0.1 www.ashemaletube.com
+127.0.0.1 www.tranny.one
+127.0.0.1 besttrannypornsites.com
+127.0.0.1 www.nutaku.net
+127.0.0.1 porngameshub.com
+127.0.0.1 69games.xxx
+127.0.0.1 gamcore.com
+127.0.0.1 www.gamesofdesire.com
+127.0.0.1 hooligapps.com
+127.0.0.1 sexgamesclub.com
+127.0.0.1 assist.lifeselector.com
+127.0.0.1 www.sexemulator.com
+127.0.0.1 landing.brazzersnetwork.com
+127.0.0.1 landing.rk.com
+127.0.0.1 www.g2fame.com
+127.0.0.1 www.digitalplayground.com
+127.0.0.1 landing.mofosnetwork.com
+127.0.0.1 wct.link
+127.0.0.1 landing.twistysnetwork.com
+127.0.0.1 join.teamskeet.com
+127.0.0.1 faphouse.com
+127.0.0.1 landing.bangbrosnetwork.com
+127.0.0.1 enter.private.com
+127.0.0.1 join.newsensations.com
+127.0.0.1 www.g2fame.com
+127.0.0.1 www.elegantangel.com
+127.0.0.1 www.videosz.com
+127.0.0.1 enter.javhd.com
+127.0.0.1 www.tripforfuck.com
+127.0.0.1 teenmegaworld.net
+127.0.0.1 join.pornprosnetwork.com
+127.0.0.1 join.spizoo.com
+127.0.0.1 join.alljapanesepass.com
+127.0.0.1 signup.18videoz.com
+127.0.0.1 nubiles.net
+127.0.0.1 signup.kinkyfamily.com
+127.0.0.1 www.dorcelclub.com
+127.0.0.1 join.clubtug.com
+127.0.0.1 bestpaypornsites.com
+127.0.0.1 bangstars.com
+127.0.0.1 www.richmen.com
+127.0.0.1 adultfriendfinder.com
+127.0.0.1 www.findafuckbuddy.net
+127.0.0.1 www.highreply.com
+127.0.0.1 flingster.com
+127.0.0.1 onlinefreechat.com
+127.0.0.1 perezhilton.com
+127.0.0.1 www.nakednews.com
+127.0.0.1 avn.com
+127.0.0.1 www.maxim.comtag
+127.0.0.1 www.menshealth.comsex-women
+127.0.0.1 forum.adultdvdtalk.com
+127.0.0.1 www.yourdoll.com
+127.0.0.1 www.sexysexdoll.com
+127.0.0.1 sexyrealsexdolls.com
+127.0.0.1 www.joylovedolls.com
+127.0.0.1 toppornsites.com
+
+
+
+
